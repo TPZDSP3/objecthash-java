@@ -1,5 +1,6 @@
 package uk.gov.objecthash;
 
+import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -36,6 +37,11 @@ public interface ObjectHashable {
             sb.append(String.format("%02x", b));
         }
         return sb.toString();
+    }
+
+
+    default StringValue redacted() {
+        return new StringValue("**REDACTED**" + hexDigest());
     }
     
     byte[] digest();
