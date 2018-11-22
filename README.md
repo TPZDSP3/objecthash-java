@@ -37,4 +37,4 @@ ObjectHash.hexDigest("Hello world") // bd75f78d2f7aa16b72d9fcdb822754a10310ef4cd
 
 ## Licence
 
-[MIT License](LICENCE.txt)
+[MIT License](LICENSE.txt)
