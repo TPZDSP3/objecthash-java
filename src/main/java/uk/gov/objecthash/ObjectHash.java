@@ -4,11 +4,13 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.Normalizer;
+import java.time.Instant;
 
 public final class ObjectHash {
     
     private static final String STRING_TAG = "u";
     private static final String INTEGER_TAG = "i";
+    private static final String TIMESTAMP_TAG = "t";
 
     private static String toHexDigest (String tag, String value) {
         MessageDigest sha256 = sha256Instance();
@@ -30,12 +32,16 @@ public final class ObjectHash {
         }
     }
 
-    public static String stringToHexDigest (String value) {
+    public static String toHexDigest (String value) {
        return toHexDigest(STRING_TAG, value);
     }   
     
-    public static String integerToHexDigest (Integer value)  {
+    public static String toHexDigest (Integer value)  {
        return toHexDigest(INTEGER_TAG, value.toString());
+    }  
+    
+    public static String toHexDigest (Instant value)  {
+       return toHexDigest(TIMESTAMP_TAG, value.toString());
     }
 
 }
