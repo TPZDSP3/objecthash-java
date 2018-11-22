@@ -7,12 +7,11 @@ import java.text.Normalizer;
 
 public final class ObjectHash {
     
-    
     private static final String STRING_TAG = "u";
     private static final String INTEGER_TAG = "i";
 
-    private static String toHexDigest (String tag, String value) throws NoSuchAlgorithmException {
-        MessageDigest sha256 = MessageDigest.getInstance("SHA-256");
+    private static String toHexDigest (String tag, String value) {
+        MessageDigest sha256 = sha256Instance();
         sha256.update(tag.getBytes(StandardCharsets.UTF_8));
         String normalisedValue = Normalizer.normalize(value, Normalizer.Form.NFC);
         sha256.update(normalisedValue.getBytes(StandardCharsets.UTF_8));
@@ -22,11 +21,21 @@ public final class ObjectHash {
         }
         return sb.toString();
     }
+    
+    private static MessageDigest sha256Instance() {
+        try {
+            return MessageDigest.getInstance("SHA-256");
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException("can't happen", e);
+        }
+    }
 
-    public static String stringToHexDigest (String value) throws NoSuchAlgorithmException {
+    public static String stringToHexDigest (String value) {
        return toHexDigest(STRING_TAG, value);
-    }    
-    public static String integerToHexDigest (Integer value) throws NoSuchAlgorithmException {
+    }   
+    
+    public static String integerToHexDigest (Integer value)  {
        return toHexDigest(INTEGER_TAG, value.toString());
     }
+
 }
