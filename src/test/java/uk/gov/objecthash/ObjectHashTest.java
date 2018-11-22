@@ -103,4 +103,21 @@ public class ObjectHashTest {
 
         assertEquals("5b64d51fe38fb3512e8a4dff6a4705bea40df7b617997f526e4205023eacd711", digest);      
     }
+    
+    @Test
+    public void hashesDictOfMixedTypes() {
+        Map<String, ObjectHashable> data = new HashMap<>();
+        data.put("id", new StringValue("GB"));
+        data.put("official-name", new StringValue("The United Kingdom of Great Britain and Northern Ireland"));
+        data.put("name", new StringValue("United Kingdom"));
+        
+        Set<ObjectHashable> citizenNames = new HashSet<>();
+        citizenNames.add(new StringValue("Briton"));
+        citizenNames.add(new StringValue("British citizen"));
+        data.put("citizen-names", new SetValue(citizenNames));
+
+        String digest = ObjectHash.toHexDigest(data);
+
+        assertEquals("45d9392ad17cead3fa46501eba3e5ac237cb46a39f1e175905f00ef6a6667257", digest);
+    }
 }
