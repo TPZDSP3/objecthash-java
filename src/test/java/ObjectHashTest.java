@@ -6,6 +6,8 @@ import static org.junit.Assert.*;
 
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ObjectHashTest {
     @Test
@@ -21,5 +23,13 @@ public class ObjectHashTest {
         assertEquals(classUnderTest.hexDigest("\u03d2\u0301"), "f72826713a01881404f34975447bd6edcb8de40b191dc57097ebf4f5417a554d" );
     }
 
-
+    @Test
+    public void hashesDict() throws NoSuchAlgorithmException {
+        ObjectHash objectHash = new ObjectHash();
+        Map<String, ObjectHashable> data = new HashMap<>();
+        data.put("foo", new StringValue("bar"));
+        data.put("null", null);
+        String digest = objectHash.hexDigest(data);
+        assertEquals(digest, "7ef5237c3027d6c58100afadf37796b3d351025cf28038280147d42fdc53b960");
+    }
 }

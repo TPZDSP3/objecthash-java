@@ -1,22 +1,15 @@
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.text.Normalizer;
+import java.util.Map;
 
 public final class ObjectHash {
-    
-    
-    private static final String STRING_TAG = "u";
+    public static final String STRING_VALUE_TAG = "u";
+    public static final String DICT_VALUE_TAG = "d";
 
     public String hexDigest (String value) throws NoSuchAlgorithmException {
-        MessageDigest sha256 = MessageDigest.getInstance("SHA-256");
-        sha256.update(STRING_TAG.getBytes(StandardCharsets.UTF_8));
-        String normalisedValue = Normalizer.normalize(value, Normalizer.Form.NFC);
-        sha256.update(normalisedValue.getBytes(StandardCharsets.UTF_8));
-        StringBuilder sb = new StringBuilder();
-        for (byte b : sha256.digest()) {
-            sb.append(String.format("%02x", b));
-        }
-        return sb.toString();
+        return new StringValue(value).hexDigest();
     }
+    
+    public String hexDigest (Map<String, ObjectHashable> value) throws NoSuchAlgorithmException {
+        return new DictValue(value).hexDigest();
+    } 
 }
