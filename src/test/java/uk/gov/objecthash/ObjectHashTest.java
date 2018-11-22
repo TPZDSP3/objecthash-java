@@ -1,6 +1,8 @@
 package uk.gov.objecthash;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
+import java.nio.charset.StandardCharsets;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -25,7 +27,21 @@ public class ObjectHashTest {
     public void normalisesStrings() {
         assertEquals(ObjectHash.toHexDigest("\u03d3"), "f72826713a01881404f34975447bd6edcb8de40b191dc57097ebf4f5417a554d" );
         assertEquals(ObjectHash.toHexDigest("\u03d2\u0301"), "f72826713a01881404f34975447bd6edcb8de40b191dc57097ebf4f5417a554d" );
-    }    
+    }
+    
+    @Test
+    public void hashesByteArrays() {
+        byte[] bytes = {0x00, 0x01};
+        assertEquals("4b2ef4bb2adb559b4623d0e1680529e84554439a68197241d568c52c8147d6de", ObjectHash.toHexDigest(bytes));
+    }
+    
+    @Test
+    public void doesNotNormaliseByteArrays() {
+        byte[] bytes1 = "\u03d3".getBytes(StandardCharsets.UTF_8);
+        byte[] bytes2 = "\u03d2\u0301".getBytes(StandardCharsets.UTF_8);
+        
+        assertNotEquals(ObjectHash.toHexDigest(bytes1), ObjectHash.toHexDigest(bytes2));
+    }
     
     @Test
     public void hashesIntegers() {

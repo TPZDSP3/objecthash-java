@@ -29,4 +29,8 @@ public final class ObjectHash {
     public static String toHexDigest(List<ObjectHashable> value) {
         return new ListValue(value).hexDigest();
     }
+
+    public static String toHexDigest(byte[] value) {
+        return new RawValue(value).hexDigest();
+    }
 }
