@@ -12,13 +12,15 @@ This will be used by [openregister-java]() to provide a verifiable log of data. 
 The set of types supported this objecthash implementation are:
 - Integer
 - Unicode string
+- List
 - Set
+- Hash
 - Timestamp
 
 Timestamp is an extension.
 It represents a datetime in UTC with seconds precision, and is encoded by taking the ISO8601 string representation and prefixing with the tag "t".
 
-Objecthash-java does not implement Boolean, Float, or Array types.
+objecthash-java does not implement Boolean or Float types.
 
 ### Redacting primitive values
 
