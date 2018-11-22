@@ -1,16 +1,17 @@
 package uk.gov.objecthash;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
-import java.security.NoSuchAlgorithmException;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import static org.junit.Assert.*;
+import org.junit.Test;
 
 
 public class ObjectHashTest {
@@ -56,7 +57,7 @@ public class ObjectHashTest {
         data.add(new StringValue("foo"));
         data.add(new StringValue("bar"));
 
-        String digest = new SetValue(data).hexDigest();
+        String digest = ObjectHash.toHexDigest(data);
         assertEquals("1d572df95be4d038068133b6a162cbe2172f15bc7d8a020faca7a9a93e8a2649", digest);
     }
     
@@ -67,7 +68,28 @@ public class ObjectHashTest {
         data.add(new StringValue("bar"));
         data.add(null);
 
-        String digest = new SetValue(data).hexDigest();
+        String digest = ObjectHash.toHexDigest(data);
         assertEquals("1d572df95be4d038068133b6a162cbe2172f15bc7d8a020faca7a9a93e8a2649", digest);   
+    }
+    
+    @Test
+    public void hashesList() {
+        List<ObjectHashable> data = new ArrayList<>();
+        data.add(new StringValue("foo"));
+        data.add(new StringValue("bar"));
+
+        String digest = ObjectHash.toHexDigest(data);
+        assertEquals("32ae896c413cfdc79eec68be9139c86ded8b279238467c216cf2bec4d5f1e4a2", digest);
+    }
+
+    @Test
+    public void hashesListIgnoringNull() {
+        List<ObjectHashable> data = new ArrayList<>();
+        data.add(new StringValue("foo"));
+        data.add(new StringValue("bar"));
+        data.add(null);
+
+        String digest = ObjectHash.toHexDigest(data);
+        assertEquals("32ae896c413cfdc79eec68be9139c86ded8b279238467c216cf2bec4d5f1e4a2", digest);
     }
 }
