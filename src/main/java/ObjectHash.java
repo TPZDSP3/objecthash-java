@@ -7,10 +7,11 @@ public final class ObjectHash {
     
     
     private static final String STRING_TAG = "u";
+    private static final String INTEGER_TAG = "i";
 
-    public String hexDigest (String value) throws NoSuchAlgorithmException {
+    private static String toHexDigest (String tag, String value) throws NoSuchAlgorithmException {
         MessageDigest sha256 = MessageDigest.getInstance("SHA-256");
-        sha256.update(STRING_TAG.getBytes(StandardCharsets.UTF_8));
+        sha256.update(tag.getBytes(StandardCharsets.UTF_8));
         String normalisedValue = Normalizer.normalize(value, Normalizer.Form.NFC);
         sha256.update(normalisedValue.getBytes(StandardCharsets.UTF_8));
         StringBuilder sb = new StringBuilder();
@@ -18,5 +19,12 @@ public final class ObjectHash {
             sb.append(String.format("%02x", b));
         }
         return sb.toString();
+    }
+
+    public static String stringToHexDigest (String value) throws NoSuchAlgorithmException {
+       return toHexDigest(STRING_TAG, value);
+    }    
+    public static String integerToHexDigest (Integer value) throws NoSuchAlgorithmException {
+       return toHexDigest(INTEGER_TAG, value.toString());
     }
 }
