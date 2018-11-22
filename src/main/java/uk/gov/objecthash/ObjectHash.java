@@ -8,10 +8,23 @@ import java.time.Instant;
 
 public final class ObjectHash {
     
-    private static final String STRING_TAG = "u";
-    private static final String INTEGER_TAG = "i";
-    private static final String TIMESTAMP_TAG = "t";
-
+    private enum Tag {
+        STRING("u"),
+        INTEGER("i"),
+        TIMESTAMP("t");
+        
+        private String tag;
+        
+        Tag(String tag) {
+            this.tag = tag;
+        }
+        
+        public String getTag() {
+            return tag;
+        }
+    }
+   
+  
     private static String toHexDigest (String tag, String value) {
         MessageDigest sha256 = sha256Instance();
         sha256.update(tag.getBytes(StandardCharsets.UTF_8));
@@ -33,15 +46,15 @@ public final class ObjectHash {
     }
 
     public static String toHexDigest (String value) {
-       return toHexDigest(STRING_TAG, value);
+       return toHexDigest(Tag.STRING.getTag(), value);
     }   
     
     public static String toHexDigest (Integer value)  {
-       return toHexDigest(INTEGER_TAG, value.toString());
+       return toHexDigest(Tag.INTEGER.getTag(), value.toString());
     }  
     
     public static String toHexDigest (Instant value)  {
-       return toHexDigest(TIMESTAMP_TAG, value.toString());
+       return toHexDigest(Tag.TIMESTAMP.getTag(), value.toString());
     }
 
 }
