@@ -1,9 +1,12 @@
 package uk.gov.objecthash;
 import org.junit.Test;
 
+import java.security.NoSuchAlgorithmException;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.junit.Assert.*;
 
@@ -34,5 +37,15 @@ public class ObjectHashTest {
         LocalDate date = LocalDate.parse("2000-01-01");
         Instant instant = date.atStartOfDay(ZoneId.of("UTC")).toInstant();
         assertEquals(ObjectHash.toHexDigest(instant), "cb34961d3d1a44386a73c37eb64c72a2b61ff40fc108abca92ef07c4954a1645" );
+    }
+    
+    @Test
+    public void hashesDict() {
+        ObjectHash objectHash = new ObjectHash();
+        Map<String, ObjectHashable> data = new HashMap<>();
+        data.put("foo", new StringValue("bar"));
+        data.put("null", null);
+        String digest = objectHash.hexDigest(data);
+        assertEquals(digest, "7ef5237c3027d6c58100afadf37796b3d351025cf28038280147d42fdc53b960");
     }
 }
