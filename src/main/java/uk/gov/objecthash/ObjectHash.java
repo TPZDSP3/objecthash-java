@@ -6,15 +6,15 @@ import java.util.Map;
 import java.util.Set;
 
 public final class ObjectHash {
-    public static String toHexDigest (String value)  {
+    public static String toHexDigest(String value)  {
        return new StringValue(value).hexDigest();
     }
 
-    public static String toHexDigest (Integer value)  {
+    public static String toHexDigest(Integer value)  {
         return new IntegerValue(value).hexDigest();
     }
 
-    public static String toHexDigest (Instant value)  {
+    public static String toHexDigest(Instant value)  {
        return new TimestampValue(value).hexDigest();
     }
 

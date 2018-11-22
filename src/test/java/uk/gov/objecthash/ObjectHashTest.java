@@ -92,4 +92,15 @@ public class ObjectHashTest {
         String digest = ObjectHash.toHexDigest(data);
         assertEquals("32ae896c413cfdc79eec68be9139c86ded8b279238467c216cf2bec4d5f1e4a2", digest);
     }
+    
+    @Test
+    public void hashesListIncludingRawValue() {
+        List<ObjectHashable> data = new ArrayList<>();
+        data.add(new StringValue("foo"));
+        data.add(new RawValue(new StringValue("foo").digest()));
+        
+        String digest = ObjectHash.toHexDigest(data);
+
+        assertEquals("5b64d51fe38fb3512e8a4dff6a4705bea40df7b617997f526e4205023eacd711", digest);      
+    }
 }
