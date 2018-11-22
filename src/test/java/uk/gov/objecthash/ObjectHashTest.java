@@ -6,7 +6,9 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import static org.junit.Assert.*;
 
@@ -41,11 +43,31 @@ public class ObjectHashTest {
     
     @Test
     public void hashesDict() {
-        ObjectHash objectHash = new ObjectHash();
         Map<String, ObjectHashable> data = new HashMap<>();
         data.put("foo", new StringValue("bar"));
         data.put("null", null);
-        String digest = objectHash.hexDigest(data);
-        assertEquals(digest, "7ef5237c3027d6c58100afadf37796b3d351025cf28038280147d42fdc53b960");
+        String digest = ObjectHash.toHexDigest(data);
+        assertEquals("7ef5237c3027d6c58100afadf37796b3d351025cf28038280147d42fdc53b960", digest);
+    }
+    
+    @Test
+    public void hashesSet() {
+        Set<ObjectHashable> data = new HashSet<>();
+        data.add(new StringValue("foo"));
+        data.add(new StringValue("bar"));
+
+        String digest = new SetValue(data).hexDigest();
+        assertEquals("1d572df95be4d038068133b6a162cbe2172f15bc7d8a020faca7a9a93e8a2649", digest);
+    }
+    
+    @Test
+    public void hashesSetIgnoringNull() {
+        Set<ObjectHashable> data = new HashSet<>();
+        data.add(new StringValue("foo"));
+        data.add(new StringValue("bar"));
+        data.add(null);
+
+        String digest = new SetValue(data).hexDigest();
+        assertEquals("1d572df95be4d038068133b6a162cbe2172f15bc7d8a020faca7a9a93e8a2649", digest);   
     }
 }

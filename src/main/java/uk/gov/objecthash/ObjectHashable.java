@@ -10,6 +10,7 @@ public interface ObjectHashable {
     String INTEGER_TAG = "i";
     String TIMESTAMP_TAG = "t";
     String DICT_TAG = "d";
+    String SET_TAG = "s";
 
     static byte[] digest(String tag, String value) {
         MessageDigest sha256 = sha256Instance();

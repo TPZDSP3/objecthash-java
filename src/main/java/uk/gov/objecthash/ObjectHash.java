@@ -2,6 +2,7 @@ package uk.gov.objecthash;
 
 import java.time.Instant;
 import java.util.Map;
+import java.util.Set;
 
 public final class ObjectHash {
     public static String toHexDigest (String value)  {
@@ -16,7 +17,7 @@ public final class ObjectHash {
        return new TimestampValue(value).hexDigest();
     }
 
-    public String hexDigest (Map<String, ObjectHashable> value) {
+    public static String toHexDigest(Map<String, ObjectHashable> value) {
         return new DictValue(value).hexDigest();
     }
 }

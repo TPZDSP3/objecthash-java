@@ -24,22 +24,11 @@ public class DictValue implements ObjectHashable {
                 hashValues.add(concatEntryHashes(key.digest(), value.digest()));
             }
         }
-        hashValues.sort(this::compareBytes);
+        hashValues.sort(Util::compareBytes);
         sha256.update(ObjectHashable.DICT_TAG.getBytes(StandardCharsets.UTF_8));
         hashValues.forEach(sha256::update);
         
         return sha256.digest();
-    }
-
-    private int compareBytes(byte[] left, byte[] right) {
-        for (int i = 0, j = 0; i < left.length && j < right.length; i++, j++) {
-            int a = (left[i] & 0xff);
-            int b = (right[j] & 0xff);
-            if (a != b) {
-                return a - b;
-            }
-        }
-        return left.length - right.length;
     }
     
     private byte[] concatEntryHashes(byte[] attrHash, byte[] valueHash) {
