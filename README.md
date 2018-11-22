@@ -29,7 +29,7 @@ TODO
 Hash a single value:
 
 ```
-ObjectHash.hexDigest("Hello world") // bd75f78d2f7aa16b72d9fcdb822754a10310ef4cd5b6cca6aa48d98331e246ab
+ObjectHash.stringToHexDigest("Hello world"); // bd75f78d2f7aa16b72d9fcdb822754a10310ef4cd5b6cca6aa48d98331e246ab
 ```
 
 ## Dependencies
