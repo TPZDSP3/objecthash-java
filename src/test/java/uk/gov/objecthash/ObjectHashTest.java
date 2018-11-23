@@ -140,8 +140,9 @@ public class ObjectHashTest {
     @Test
     public void returnsSuppliedHashIfRedacted() {
         StringValue original = new StringValue("hello");
+        StringValue redacted = new StringValue("**REDACTED**" + original.hexDigest());
         
-        assertEquals(original.hexDigest(), original.redacted().hexDigest());
+        assertEquals(original.hexDigest(), redacted.hexDigest());
     }
 
     @Test

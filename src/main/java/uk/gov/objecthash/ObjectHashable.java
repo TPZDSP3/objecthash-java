@@ -38,11 +38,6 @@ public interface ObjectHashable {
         }
         return sb.toString();
     }
-
-
-    default StringValue redacted() {
-        return new StringValue("**REDACTED**" + hexDigest());
-    }
     
     byte[] digest();
 }
