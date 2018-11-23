@@ -148,5 +148,10 @@ public class ObjectHashTest {
     public void hashesKnownRedactedHash() {
         assertEquals(ObjectHash.toHexDigest("**REDACTED**2a42a9c91b74c0032f6b8000a2c9c5bcca5bb298f004e8eff533811004dea511"), "2a42a9c91b74c0032f6b8000a2c9c5bcca5bb298f004e8eff533811004dea511" );
     }
+    
+    @Test
+    public void hashesInvalidRedactedValues() {
+        assertEquals(ObjectHash.toHexDigest("**REDACTED**banana"), "525b975c2979f427dcb79db8992035a9c2157a3c54492050753b9af552756c7a");
+    }
 
 }

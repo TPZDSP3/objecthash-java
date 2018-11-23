@@ -2,10 +2,6 @@ package uk.gov.objecthash;
 
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.binary.Hex;
-import uk.gov.objecthash.exceptions.InvalidRedactedValue;
-
-import java.io.UnsupportedEncodingException;
-import java.nio.charset.StandardCharsets;
 
 public class StringValue implements ObjectHashable {
     private final String value;
@@ -20,7 +16,13 @@ public class StringValue implements ObjectHashable {
             try {
                 return Hex.decodeHex(hexDigest);
             } catch (DecoderException e) {
-                throw new InvalidRedactedValue("Invalid hex digest: " + hexDigest, e);
+                /* 
+                 * If the redacted value is not valid hex, then treat it as
+                 * a non-redacted string. This ensures that every possible
+                 * data structure has a hash. We do not enforce that the hash
+                 * length matches any particular hashing algorithm, only that
+                 * it is hex encoded.
+                 */
             }
         }
         
