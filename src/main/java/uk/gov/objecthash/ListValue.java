@@ -4,6 +4,7 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class ListValue implements ObjectHashable {
 
@@ -16,16 +17,12 @@ public class ListValue implements ObjectHashable {
     @Override
     public byte[] digest() {
         MessageDigest sha256 = ObjectHashable.sha256Instance();
-
-        ArrayList<byte[]> elementHashes = new ArrayList<>();
-        values.forEach(value -> {
-            if (value != null) {
-                elementHashes.add(value.digest());
-            }
-        });
-
-        sha256.update(ObjectHashable.LIST_TAG.getBytes(StandardCharsets.UTF_8));
-        elementHashes.forEach(sha256::update);
+        sha256.update(ObjectHashable.LIST_TAG.getBytes(StandardCharsets.UTF_8)); 
+        
+        values.stream()
+                .filter(Objects::nonNull)
+                .map(ObjectHashable::digest)
+                .forEach(sha256::update);
 
         return sha256.digest();
     }
