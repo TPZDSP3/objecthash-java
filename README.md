@@ -16,9 +16,12 @@ The set of types supported this objecthash implementation are:
 - Set
 - Hash
 - Timestamp
+- Raw
 
 Timestamp is an extension.
 It represents a datetime in UTC with seconds precision, and is encoded by taking the ISO8601 string representation and prefixing with the tag "t".
+
+Raw is also an extension. It is equivalent to the string type but signifies that the value is a raw byte array rather than human readable text.
 
 objecthash-java does not implement Boolean or Float types.
 
