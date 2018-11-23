@@ -35,7 +35,7 @@ ObjectHash.stringToHexDigest("Hello world"); // bd75f78d2f7aa16b72d9fcdb822754a1
 ```
 
 ## Dependencies
-- Java 8
+- Java 11
 
 ## Licence
 

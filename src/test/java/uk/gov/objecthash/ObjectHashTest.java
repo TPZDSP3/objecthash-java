@@ -34,7 +34,7 @@ public class ObjectHashTest {
     
     @Test
     public void hashesTimestamps() {
-        LocalDate date = LocalDate.parse("2000-01-01");
+        var date = LocalDate.parse("2000-01-01");
         Instant instant = date.atStartOfDay(ZoneId.of("UTC")).toInstant();
         assertEquals(ObjectHash.toHexDigest(instant), "cb34961d3d1a44386a73c37eb64c72a2b61ff40fc108abca92ef07c4954a1645" );
     }
