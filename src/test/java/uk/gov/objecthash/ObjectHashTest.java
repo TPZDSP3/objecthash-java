@@ -1,6 +1,8 @@
 package uk.gov.objecthash;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;
 
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.time.Instant;
 import java.time.LocalDate;
@@ -153,6 +155,13 @@ public class ObjectHashTest {
     @Test
     public void hashesInvalidRedactedValues() {
         assertEquals(ObjectHash.toHexDigest("**REDACTED**banana"), "525b975c2979f427dcb79db8992035a9c2157a3c54492050753b9af552756c7a");
+    }
+    
+    @Test
+    public void hashesJsonNode() throws IOException {
+        var jsonNode = new ObjectMapper().readTree("{\"foo\": \"bar\"}");
+        
+        assertEquals("7ef5237c3027d6c58100afadf37796b3d351025cf28038280147d42fdc53b960", ObjectHash.toHexDigest(jsonNode));
     }
 
 }

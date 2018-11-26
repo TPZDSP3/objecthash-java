@@ -1,5 +1,7 @@
 package uk.gov.objecthash;
 
+import com.fasterxml.jackson.databind.JsonNode;
+
 import java.time.Instant;
 import java.util.List;
 import java.util.Map;
@@ -32,5 +34,11 @@ public final class ObjectHash {
 
     public static String toHexDigest(byte[] value) {
         return new RawValue(value).hexDigest();
+    }
+    
+    public static String toHexDigest(JsonNode json) {
+        
+        return "foo";
+        
     }
 }
