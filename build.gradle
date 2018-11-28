@@ -9,6 +9,46 @@
 plugins {
     // Apply the java-library plugin to add support for Java Library
     id 'java-library'
+    id "com.jfrog.bintray" version "1.8.4"
+    id 'maven'
+    id 'maven-publish'
+}
+
+def majorMinorVersion = '0.1'
+def buildNumber = System.getenv('TRAVIS_BUILD_NUMBER') ? System.getenv('TRAVIS_BUILD_NUMBER') : '0000'
+def versionNumber = majorMinorVersion + '.' + buildNumber
+
+group 'objecthash-java'
+version versionNumber
+
+publishing {
+    publications {
+        JarPublication(MavenPublication) {
+            from components.java
+            groupId 'objecthash-java'
+            artifactId 'objecthash-java'
+            version versionNumber
+        }
+    }
+}
+
+
+bintray {
+    user = System.getenv('BINTRAY_USER')
+    key = System.getenv('BINTRAY_KEY')
+    publications = ['JarPublication']
+    publish = true
+    pkg {
+        repo = 'openregister'
+        name = 'objecthash-java'
+        userOrg = 'openregister'
+        licenses = ['MIT']
+        vcsUrl = 'https://github.com/openregister/objecthash-java.git'
+        version {
+            name = versionNumber
+            released = new Date()
+        }
+    }
 }
 
 dependencies {
