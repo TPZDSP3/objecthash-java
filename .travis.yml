@@ -10,7 +10,7 @@ cache:
     - $HOME/.gradle/wrapper/
 deploy:
   provider: script
-  script: './gradlew clean build -x test && ./gradlew bintrayUpload'
+  script: './gradlew bintrayUpload'
   on:
     branch: master
 
