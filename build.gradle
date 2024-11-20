@@ -9,7 +9,7 @@
 plugins {
     // Apply the java-library plugin to add support for Java Library
     id 'java-library'
-    id "com.jfrog.bintray" version "1.8.4"
+    // id "com.jfrog.bintray" version "1.8.4"
     id 'maven'
     id 'maven-publish'
 }
@@ -33,23 +33,23 @@ publishing {
 }
 
 
-bintray {
-    user = System.getenv('BINTRAY_USER')
-    key = System.getenv('BINTRAY_KEY')
-    publications = ['JarPublication']
-    publish = true
-    pkg {
-        repo = 'openregister'
-        name = 'objecthash-java'
-        userOrg = 'openregister'
-        licenses = ['MIT']
-        vcsUrl = 'https://github.com/openregister/objecthash-java.git'
-        version {
-            name = versionNumber
-            released = new Date()
-        }
-    }
-}
+// bintray {
+//     user = System.getenv('BINTRAY_USER')
+//     key = System.getenv('BINTRAY_KEY')
+//     publications = ['JarPublication']
+//     publish = true
+//     pkg {
+//         repo = 'openregister'
+//         name = 'objecthash-java'
+//         userOrg = 'openregister'
+//         licenses = ['MIT']
+//         vcsUrl = 'https://github.com/openregister/objecthash-java.git'
+//         version {
+//             name = versionNumber
+//             released = new Date()
+//         }
+//     }
+// }
 
 dependencies {
     // This dependency is exported to consumers, that is to say found on their compile classpath.
@@ -69,4 +69,9 @@ repositories {
     // Use jcenter for resolving your dependencies.
     // You can declare any Maven/Ivy/file repository here.
     jcenter()
+}
+task fatJar(type: Jar) {
+    classifier = 'all'
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
 }

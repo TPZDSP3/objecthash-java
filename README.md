@@ -1,4 +1,6 @@
 # objecthash-java
+## Build jar with dependencies
+`docker run --rm --volume "$PWD":/usr/src/objecthash-java --workdir /usr/src/objecthash-java openjdk:8 bash -c "./gradlew fatJar"`
 
 objecthash-java is a Java version of [Ben Laurie's objecthash](https://github.com/benlaurie/objecthash).
 
